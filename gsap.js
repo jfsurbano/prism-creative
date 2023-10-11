@@ -27,23 +27,21 @@ import { gsap, ScrollTrigger, Draggable, MotionPathPlugin } from "gsap/all";
 gsap.registerPlugin(ScrollTrigger, Draggable, Flip, MotionPathPlugin);
 
 
+// Target all headings (h1, h2, h3, h4, h5, h6)
+const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
 
-
-//All headings have a masked slide up effect
-let typeSplit = new SplitType('[animate]', {
-  types: 'lines, words, chars',
-  tagName: 'span'
-})
-
-gsap.from('[animate] .word', {
-  y: '100%',
-  opacity: 1,
-  duration: 0.5,
-  ease: 'power1.out',
-  stagger: 0.1,
+headings.forEach((heading) => {
+  // Apply your GSAP animations to each heading
+  gsap.from(heading, {
+    y: '100%',
+    opacity: 1,
+    duration: 0.5,
+    ease: 'power1.out',
+    stagger: 0.1,
   
-  scrollTrigger: {
-    trigger: '[animate]',
-    start: 'top center',
-  }
-})
+    scrollTrigger: {
+      trigger: heading,
+      start: 'top center',
+    }
+  });
+});
