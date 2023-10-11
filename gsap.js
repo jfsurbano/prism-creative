@@ -1,47 +1,53 @@
-// typical import
-import gsap from "gsap";
+//Documentation: https://gsap.com/docs/v3/gsap/
 
-// get other plugins:
-import ScrollTrigger from "gsap/ScrollTrigger";
-import Flip from "gsap/Flip";
-import Draggable from "gsap/Draggable";
+// Import GSAP and its plugins
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import SplitType from 'split-type';
 
-// or all tools are exported from the "all" file (excluding members-only plugins):
-import { gsap, ScrollTrigger, Draggable, MotionPathPlugin } from "gsap/all";
+// Register the ScrollTrigger plugin
+gsap.registerPlugin(ScrollTrigger);
 
-// don't forget to register plugins
-gsap.registerPlugin(ScrollTrigger, Draggable, Flip, MotionPathPlugin); 
+let typeSplit = new SplitType('[heading]', {
+  types: 'lines, words, chars',
+  tagName: 'span'
+});
 
-// typical import
-import gsap from "gsap";
+// Second SplitType instance that splits only lines of words
+let typeSplit2 = new SplitType('[paragraph]', {
+  types: 'lines',
+  tagName: 'span'
+});
 
-// get other plugins:
-import ScrollTrigger from "gsap/ScrollTrigger";
-import Flip from "gsap/Flip";
-import Draggable from "gsap/Draggable";
-
-// or all tools are exported from the "all" file (excluding members-only plugins):
-import { gsap, ScrollTrigger, Draggable, MotionPathPlugin } from "gsap/all";
-
-// don't forget to register plugins
-gsap.registerPlugin(ScrollTrigger, Draggable, Flip, MotionPathPlugin);
-
-
-// Target all headings (h1, h2, h3, h4, h5, h6)
-const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
-
-headings.forEach((heading) => {
-  // Apply your GSAP animations to each heading
-  gsap.from(heading, {
-    y: '100%',
-    opacity: 1,
-    duration: 0.5,
-    ease: 'power1.out',
-    stagger: 0.1,
-  
-    scrollTrigger: {
-      trigger: heading,
-      start: 'top center',
+// Create a timeline to control the animation sequence
+const textAnimation = gsap.timeline(
+    {
+        delay: 1
     }
-  });
+    );
+
+// Animation for .word
+textAnimation.from('[heading] .word', {
+  y: '100%',
+  opacity: 0,
+  duration: 0.5,
+  ease: 'power1.out',
+  stagger: 0.1,
+  scrollTrigger: {
+    trigger: document.querySelector('[heading]'),
+    start: 'top center',
+  }
+});
+
+// Animation for .line with a stagger
+textAnimation.from('[paragraph] .line', {
+  y: '100%',
+  opacity: 0,
+  duration: 0.5,
+  ease: 'power1.out',
+  stagger: 0.1,
+  scrollTrigger: {
+    trigger: document.querySelector('[paragraph]'),
+    start: 'top center' ,
+  }
 });
