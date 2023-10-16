@@ -1,3 +1,3 @@
 import './gsap.js';
-import './barba.js';
+import './ProjectPageTransition.js';
 import './lenis.js';
