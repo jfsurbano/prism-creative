@@ -2,52 +2,27 @@
 
 // Import GSAP and its plugins
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import SplitType from 'split-type';
 
-// Register the ScrollTrigger plugin
-gsap.registerPlugin(ScrollTrigger);
+// Function to play GSAP animations when the page starts loading
+function playStartLoadingAnimations() {
+  // Add your "page starts loading" animations here
+  gsap.to(element, { opacity: 1, y: 0, duration: 1, ease: "power1.inOut" });
 
-let typeSplit = new SplitType('[heading]', {
-  types: 'lines, words, chars',
-  tagName: 'span'
-});
+  // Add more animations as needed
+}
 
-// Second SplitType instance that splits only lines of words
-let typeSplit2 = new SplitType('[paragraph]', {
-  types: 'lines',
-  tagName: 'span'
-});
 
-// Create a timeline to control the animation sequence
-const textAnimation = gsap.timeline(
-    {
-        delay: 1
-    }
-    );
+// Function to play GSAP animations when the page finishes loading
+function playFinishLoadingAnimations() {
+  // Add your "page finishes loading" animations here
+  const element = document.querySelector(".your-finish-loading-element");
+  gsap.to(element, { opacity: 1, y: 0, duration: 1, ease: "power1.inOut" });
 
-// Animation for .word
-textAnimation.from('[heading] .word', {
-  y: '100%',
-  opacity: 0,
-  duration: 0.5,
-  ease: 'power1.out',
-  stagger: 0.1,
-  scrollTrigger: {
-    trigger: document.querySelector('[heading]'),
-    start: 'top center',
-  }
-});
+  // Add more animations as needed
+}
 
-// Animation for .line with a stagger
-textAnimation.from('[paragraph] .line', {
-  y: '100%',
-  opacity: 0,
-  duration: 0.5,
-  ease: 'power1.out',
-  stagger: 0.1,
-  scrollTrigger: {
-    trigger: document.querySelector('[paragraph]'),
-    start: 'top center' ,
-  }
-});
+// Listen for the page's "load" event and then trigger the "page finishes loading" animations
+window.addEventListener("load", playFinishLoadingAnimations);
+
+// Trigger the "page starts loading" animations as soon as this script is executed
+playStartLoadingAnimations();
